@@ -14,9 +14,9 @@ class Post extends Component {
   
     const favs = this.state.favs;
     favs.forEach(element => {
-     
+      
       if(element.post._id === this.state.post._id){
-        console.log(element._id);
+       
         const post = this.state.post;
         post.liked = true;
         this.setState({post})

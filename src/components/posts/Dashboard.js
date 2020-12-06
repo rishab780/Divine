@@ -10,6 +10,7 @@ import { paginate } from "../../utils/paginate";
 import { getCurrentUser } from "./../../services/authService";
 import SearchBox from "./../common/searchBox";
 import { getFavourites } from './../../services/favouriteService';
+import { forEach } from "lodash";
 class Dashboard extends Component {
   state = {
     posts: [],
@@ -21,14 +22,31 @@ class Dashboard extends Component {
     favouriteReviews : []
   };
   async componentDidMount() {
+    let fav =false;
+    let favposts = [];
+    let favouriteReviews = await getFavourites();
+    favouriteReviews = favouriteReviews.data.favorites;
+    if(this.props.location.pathname.toLowerCase() === '/favourites'){
+      fav = true;    
+    favouriteReviews.forEach(element => {
+        favposts.push(element.post)
+      });
+      
+    }
+    
     const user = getCurrentUser();
     const { data: posts } = await getPosts();
     const { data: cuisines } = await getCuisines();
     
     const genres = [{ name: "All Cuisines" }, ...cuisines.data];
-    const fav =await getFavourites();
+    
    
-    this.setState({ posts: posts.posts, genres, user,favouriteReviews:fav.data.favorites });
+   if(fav){
+    this.setState({ posts: favposts, genres, user,favouriteReviews });
+   }else{
+    this.setState({ posts: posts.posts, genres, user ,favouriteReviews});
+   }
+    
     
   }
   handleGenreSelect = (genre) => {

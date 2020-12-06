@@ -28,12 +28,14 @@ class Form extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+
     const errors = this.validate();
     this.setState({ errors: errors || {} });
 
     this.doSubmit();
   };
   handleChange = ({ currentTarget: input }) => {
+    
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
     if (errorMessage) errors[input.name] = errorMessage;

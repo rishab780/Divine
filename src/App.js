@@ -34,7 +34,7 @@ class App extends Component {
           <BrowserRouter>
             <div>
               <Header user={this.state.user} />
-              <Route path="/Movies/:id" component={Dashboard} />
+              <Route path="/Favourites" component={Home} />
               <Route path="/Landing" component={Landing} />
               <Route path="/Dashboard" component={Dashboard} />
               <Route path="/Home" component={Home} />

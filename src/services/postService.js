@@ -11,7 +11,7 @@ export function getPost(id){
     return http.get(apiEndpoint+"/"+id);
 }
 export function savePost(post){
-   
+    console.log(post)
     return http.post(apiEndpoint,post);
 }
 export function updatePost(post){

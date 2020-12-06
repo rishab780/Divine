@@ -32,10 +32,16 @@ const Header = ({ user }) => {
               </Link>
             </li>
             <li>
+              <Link className="nav-link" to="/Favourites">
+                Favourites{" "}
+              </Link>
+            </li>
+            <li>
               <Link className="nav-link" to="/Post">
                 Review{" "}
               </Link>
             </li>
+           
           </ul>
           </React.Fragment>
 }
@@ -49,7 +55,7 @@ const Header = ({ user }) => {
                 </Link>
               </li>
                 <li className="nav-item">
-                <Link className="nav-link" to="/Landing">
+                <Link className="nav-link" to="/Home">
                  {user.name}
                 </Link>
               </li>

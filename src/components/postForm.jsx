@@ -14,6 +14,7 @@ class PostForm extends Form {
       price: "",
       review: "",
       place_name: "",
+      file:{}
     },
     genres: [],
     errors: {},
@@ -26,13 +27,13 @@ class PostForm extends Form {
     cuisine: Joi.string().required().label("Genre"),
     place_name: Joi.string().required().label("Location"),
     rating: Joi.number().min(0).max(5).required().label("Rating"),
-    price: Joi.number()
-
-      .required()
-      .label("Rate"),
+    price: Joi.number().required().label("Rate"),
+    file: Joi.any().label("File")
   };
 
   async componentDidMount() {
+    const { match: { params } } = this.props;
+    console.log(params);
     const genres = await getCuisines();
     
     this.setState({ genres: genres.data.data });
@@ -98,6 +99,7 @@ class PostForm extends Form {
           {this.renderInput("rating", "Rating", "number")}
           {this.renderSelectMenu("cuisine", "Cuisine", this.state.genres)}
           {this.renderInput("price", "Price", "number")}
+          <input type="file" name="file" onChange={this.handleChange}/>
           {this.renderSubmitForm("Save")}
           {this.renderCancelForm("Cancel", "/home")}
         </form>

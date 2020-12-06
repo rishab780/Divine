@@ -7,7 +7,7 @@ export async function login(email, password){
     
      const {data: jwt} =  await http.post(apiEndpoint, {email,password});
      
-     loginWithJwt(jwt);
+     this.loginWithJwt(jwt);
 }
 export function loginWithJwt(jwt){
     localStorage.setItem('token',jwt);

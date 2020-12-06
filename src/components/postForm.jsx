@@ -58,6 +58,7 @@ class PostForm extends Form {
     const result = {
       _id: post._id,
       item_name: post.item_name,
+      //tea
       //cuisine_id: post.genre._id,
       cuisine: post.cuisine,
       rating: post.rating,

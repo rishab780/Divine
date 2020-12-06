@@ -2,9 +2,8 @@ import React from "react";
 import Form from "./common/forms";
 import Joi from "joi-browser";
 
-
 import { getCuisines } from "./../services/cuisineService";
-import { getPost, savePost,updatePost } from "./../services/postService";
+import { getPost, savePost, updatePost } from "./../services/postService";
 class PostForm extends Form {
   state = {
     data: {
@@ -14,7 +13,7 @@ class PostForm extends Form {
       price: "",
       review: "",
       place_name: "",
-      file:{}
+      file: {},
     },
     genres: [],
     errors: {},
@@ -28,14 +27,16 @@ class PostForm extends Form {
     place_name: Joi.string().required().label("Location"),
     rating: Joi.number().min(0).max(5).required().label("Rating"),
     price: Joi.number().required().label("Rate"),
-    file: Joi.any().label("File")
+    file: Joi.any().label("File"),
   };
 
   async componentDidMount() {
-    const { match: { params } } = this.props;
+    const {
+      match: { params },
+    } = this.props;
     console.log(params);
     const genres = await getCuisines();
-    
+
     this.setState({ genres: genres.data.data });
 
     const postId = this.props.match.params.id;
@@ -45,9 +46,8 @@ class PostForm extends Form {
     try {
       const { data: post } = await getPost(postId);
       const updatedData = this.mapToViewModel(post.posts);
-     
+
       this.setState({ data: updatedData });
-      
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         return this.props.history.push("/not-found");
@@ -59,7 +59,7 @@ class PostForm extends Form {
     const result = {
       _id: post._id,
       item_name: post.item_name,
-      
+
       //cuisine_id: post.genre._id,
       cuisine: post.cuisine,
       rating: post.rating,
@@ -72,18 +72,16 @@ class PostForm extends Form {
   };
 
   doSubmit = async () => {
-    
-    if(!this.state.data._id){
+    if (!this.state.data._id) {
       await savePost(this.state.data);
-      
-    }else{
+    } else {
       await updatePost(this.state.data);
-      
     }
     this.props.history.push("/Home");
-    
   };
-
+handleCancel = () => {
+  this.props.history.push("/Home");
+}
   handleTitle = () => {
     const movie = { ...this.state.data };
     return movie._id ? "Edit Review" : "Add New Review";
@@ -99,9 +97,15 @@ class PostForm extends Form {
           {this.renderInput("rating", "Rating", "number")}
           {this.renderSelectMenu("cuisine", "Cuisine", this.state.genres)}
           {this.renderInput("price", "Price", "number")}
-          <input type="file" name="file" onChange={this.handleChange}/>
+          <input type="file" name="file" onChange={this.handleChange} />
           {this.renderSubmitForm("Save")}
-          {this.renderCancelForm("Cancel", "/home")}
+          <button
+            onClick={() => this.handleCancel()}
+            className="btn btn-secondary ml-2"
+          >
+            Cancel
+          </button>
+         
         </form>
       </div>
     );

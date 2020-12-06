@@ -12,7 +12,9 @@ export function getPost(id){
 }
 export function savePost(post){
     console.log(post)
-    return http.post(apiEndpoint,post);
+     http.post(apiEndpoint,post).then(res => { // then print response status
+        console.log(res.statusText)
+     });
 }
 export function updatePost(post){
     return http.put(apiEndpoint+'/'+post._id,post);

@@ -4,6 +4,7 @@ import Like from "../common/like";
 import { Link } from "react-router-dom";
 import { makeFavourite } from "../../services/favouriteService";
 
+
 class Post extends Component {
   state = {
     post: this.props.value,
@@ -51,10 +52,8 @@ class Post extends Component {
         <div className="row">
           <div className="card mb-3" style={{ width: "100%" }}>
             <div className="row no-gutters">
-              <div className="col-md-4">
-                <img src="..." className="card-img" alt="..."></img>
-              </div>
-              <div className="col-md-8">
+              
+              <div className="col-md-12">
                 <div className="card-body">
                   <h5 className="card-title">{this.props.value.item_name}</h5>
 

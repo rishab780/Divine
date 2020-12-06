@@ -15,7 +15,8 @@ class LoginForm extends Form {
 
   doSubmit = async() => {
     try {
-        await login(this.state.data.username,this.state.data.password);        
+        await login(this.state.data.username,this.state.data.password);       
+        console.log("imhere") 
         window.location = '/home'
         
     } catch (error) {

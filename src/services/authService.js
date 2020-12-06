@@ -7,9 +7,10 @@ export async function login(email, password){
     
      const {data: jwt} =  await http.post(apiEndpoint, {email,password});
      
-     this.loginWithJwt(jwt);
+     localStorage.setItem('token',jwt);
 }
 export function loginWithJwt(jwt){
+    
     localStorage.setItem('token',jwt);
 }
 export function getCurrentUser(){

@@ -13,10 +13,11 @@ class PostForm extends Form {
       price: "",
       review: "",
       place_name: "",
-      file: {},
+      file: null,
     },
     genres: [],
     errors: {},
+    selectedFile:null
   };
 
   schema = {
@@ -72,6 +73,11 @@ class PostForm extends Form {
   };
 
   doSubmit = async () => {
+    
+    const data = this.state.data;
+    data.file = this.state.selectedFile;
+    this.setState({data})
+    console.log(this.state.data)
     if (!this.state.data._id) {
       await savePost(this.state.data);
     } else {
@@ -81,6 +87,15 @@ class PostForm extends Form {
   };
 handleCancel = () => {
   this.props.history.push("/Home");
+}
+handleChange1= event=>{
+
+  console.log(event.target.files[0])
+  this.setState({
+    selectedFile: event.target.files[0],
+    loaded: 0,
+  })
+
 }
   handleTitle = () => {
     const movie = { ...this.state.data };
@@ -97,7 +112,7 @@ handleCancel = () => {
           {this.renderInput("rating", "Rating", "number")}
           {this.renderSelectMenu("cuisine", "Cuisine", this.state.genres)}
           {this.renderInput("price", "Price", "number")}
-          <input type="file" name="file" onChange={this.handleChange} />
+          <input type="file" name="file" onChange={this.handleChange1} />
           {this.renderSubmitForm("Save")}
           <button
             onClick={() => this.handleCancel()}
